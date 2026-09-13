@@ -69,6 +69,7 @@ export default function NearbyDevices() {
     setIsEditing(false);
   };
 
+  /** Deduplicate this offer without blocking intentional later sends to the same peer. */
   const sendToDevice = (peerId: string, list: FileList | File[] | null) => {
     if (!list || !("length" in list) || !list.length) return;
     nearby.sendTo(peerId, uniqueFiles(Array.from(list)));
@@ -81,6 +82,7 @@ export default function NearbyDevices() {
     );
   };
 
+  /** Replace the pending multi-peer selection, keeping each file identity once. */
   const handleMultiSelectFiles = (list: FileList | null) => {
     if (!list || !list.length || !selectedPeers.length) return;
 

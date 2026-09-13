@@ -479,6 +479,7 @@ function Composer({
   // editable pending queue instead of offering immediately. The nearby flow
   // passes none, so picks fall through to the original direct-offer behavior.
   const staging = !!onAddFiles;
+  /** Staged sends share the parent queue; direct sends deduplicate only this selection. */
   const acceptFiles = (files: File[]) => {
     if (staging) onAddFiles!(files);
     else onSendFiles(uniqueFiles(files));
