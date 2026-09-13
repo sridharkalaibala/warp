@@ -1,3 +1,4 @@
+import { uniqueFiles } from "../lib/warp/uniqueFiles";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { navigate } from "../router";
@@ -70,7 +71,7 @@ export default function NearbyDevices() {
 
   const sendToDevice = (peerId: string, list: FileList | File[] | null) => {
     if (!list || !("length" in list) || !list.length) return;
-    nearby.sendTo(peerId, Array.from(list));
+    nearby.sendTo(peerId, uniqueFiles(Array.from(list)));
   };
   const togglePeer = (peerId: string) => {
     setSelectedPeers((prev) =>
@@ -83,7 +84,7 @@ export default function NearbyDevices() {
   const handleMultiSelectFiles = (list: FileList | null) => {
     if (!list || !list.length || !selectedPeers.length) return;
 
-    setSelectedFiles(Array.from(list));
+    setSelectedFiles(uniqueFiles(Array.from(list)));
   };
 
   const sendToSelected = () => {
